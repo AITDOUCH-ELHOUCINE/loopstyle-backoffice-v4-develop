@@ -266,7 +266,6 @@ module.exports.initSession = (app) => {
       },
       saveUninitialized: true,
       resave: true,
-      secret,
       secret: process.env.SESSION_SECRET || 'VOTRE_SECRET_PAR_DEFAUT',
       cookie: {
         maxAge: 86400000, // 24 heures en millisecondes
