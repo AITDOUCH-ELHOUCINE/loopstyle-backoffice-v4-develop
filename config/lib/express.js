@@ -267,7 +267,14 @@ module.exports.initSession = (app) => {
       saveUninitialized: true,
       resave: true,
       secret,
-      cookie,
+      secret: process.env.SESSION_SECRET || 'VOTRE_SECRET_PAR_DEFAUT',
+      cookie: {
+        maxAge: 86400000, // 24 heures en millisecondes
+        httpOnly: true,
+        // La modification cruciale est ici
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        secure: process.env.NODE_ENV === 'production', // Mettre à `true` en production
+      },
       name,
       store: new MongoStore({
         collection,
