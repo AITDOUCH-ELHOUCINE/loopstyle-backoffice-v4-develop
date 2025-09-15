@@ -226,14 +226,33 @@ module.exports.initMiddleware = (app) => {
   app.use(express.static(config.app.webFolder));
 
   if (config.app.cors.enabled) {
-    // const whitelist = process.env.WHITE_LIST_DOMAINS;
+    //const whitelist = process.env.WHITE_LIST_DOMAINS;
+    const whitelist = [
+      'https://loopstype-bo.devrootapp.com',  // Le domaine de votre BackOffice en production
+      'http://localhost:5173'                 // Gardez ceci pour le développement local
+    ];
+  
+    // const corsOptions = {
+    //   credentials: true,
+    //   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204,
+    //   origin(origin, callback) {
+    //     // allow all
+    //     callback(null, true);
+    //   },
+    // };
+
     const corsOptions = {
       credentials: true,
-      optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204,
-      origin(origin, callback) {
-        // allow all
-        callback(null, true);
-      },
+      optionsSuccessStatus: 200,
+      origin: function (origin, callback) {
+        // Si le domaine de la requête est dans notre liste blanche (ou si la requête ne vient pas d'un navigateur)
+        if (whitelist.indexOf(origin) !== -1 || !origin) {
+          callback(null, true);
+        } else {
+          // Sinon, on refuse la requête
+          callback(new Error('Not allowed by CORS'));
+        }
+      }
     };
     app.use(cors(corsOptions));
   }
