@@ -131,6 +131,9 @@ module.exports.runBootstrap = (app, mongoose) => {
  * Initialize application middleware
  */
 module.exports.initMiddleware = (app) => {
+  // Indique à Express de faire confiance au premier proxy sur le chemin de la requête
+  // C'est ESSENTIEL pour que les cookies `secure: true` fonctionnent derrière un proxy (comme sur Render)
+  app.set('trust proxy', 1);
   const { locals } = app;
   // stripe
   app.use(
