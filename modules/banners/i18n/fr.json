@@ -1,0 +1,11 @@
+{
+  "BANNER_PING_SUCCESS": "Le Module Banners est opérationnel.",
+  "BANNER_INVALID_ID": "ID banner invalid.",
+  "BANNER_NOT_FOUND": "Banner non trouvé.",
+  "CREATE_NO_CLIENT_ERROR": "Au moins un client est requis.",
+  "RESOURCE_NOT_AUTHORIZED": "L'accès à la ressource demandée n'est pas autorisé.",
+  "BANNER_ALREADY_EXISTS": "Une banner avec le nom {{name}} existe déjà.",
+  "BANNER_CREATE_SUCCESS": "Le banner {{name}} a été crée avec succès.",
+  "BANNER_DELETE_SUCCESS": "Le banner {{name}} a été supprimée avec succès.",
+  "BANNER_UPDATE_SUCCESS": "Le banner {{name}} a été mise à jour avec succès."
+}

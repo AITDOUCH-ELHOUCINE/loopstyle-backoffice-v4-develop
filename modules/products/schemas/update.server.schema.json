@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "uuid": {
+      "type": "string"
+    },
+    "code": {
+      "type": "number"
+    },
+    "code_str": {
+      "type": "string"
+    },
+    "groupes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fonction": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "client",
+        "prestataire"
+      ]
+    },
+    "clients": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "isDeleted": {
+      "type": "boolean"
+    },
+    "isEnabled": {
+      "type": "boolean"
+    }
+  },
+  "required": [],
+  "additionalProperties": true
+}

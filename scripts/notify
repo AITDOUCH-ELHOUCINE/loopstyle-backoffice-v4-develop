@@ -1,0 +1,77 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const chalk = require('chalk');
+const mongoose = require('mongoose');
+const fs = require('fs');
+const path = require('path');
+const nunjucks = require('nunjucks');
+// eslint-disable-next-line
+const ajv = require('ajv');
+
+program
+  .version('0.1.0')
+  .option('-t, --template [template]', 'notification template')
+  .option('-s, --subject [subject]', 'Email Subject', 'Notification LoopStyle')
+  .parse(process.argv);
+
+let { template } = program;
+const { subject } = program;
+
+const stdin = process.openStdin();
+let data = { 'users': '5f02324f71212b76e6d7edb4' };
+
+let { users } = data;
+
+try {
+  data = JSON.parse(JSON.stringify(data));
+} catch (e) {
+  console.error(e);
+  // eslint-disable-next-line
+  console.error(chalk.red('Data is invalid. Please specify a valid JSON!'));
+  process.exit(1);
+}
+
+users = users.split(',');
+const invalidIds = users.filter(el => !mongoose.Types.ObjectId.isValid(el));
+
+if (invalidIds.length > 0) {
+  // eslint-disable-next-line
+  console.log(chalk.red('invalid user Ids : [%s].\nPlease provide valid user ids!'), invalidIds.join(','));
+  process.exit(1);
+}
+
+try {
+  template = path.resolve(__dirname, `templates/${template}.swig`);
+  fs.accessSync(template, fs.constants.R_OK);
+} catch (e) {
+  // eslint-disable-next-line
+  console.log(chalk.red(`Cannot read the file: [${template}].`));
+  process.exit(1);
+}
+
+
+/**
+ * Module dependencies.
+ */
+// const debug = require('debug')('scripts:notify');
+require('../helpers/polyfill');
+const m = require('../config/lib/mongoose');
+
+m.loadModels();
+
+m.connect(async () => {
+  const User = mongoose.model('User');
+  users = await User.find({
+    _id: {
+      $in: users,
+    },
+  });
+
+
+  users.forEach((user) => {
+    const mail_body = nunjucks.render(template, { ...data, user });
+    user.sendMail(subject, mail_body);
+  });
+  m.disconnect(() => { });
+});

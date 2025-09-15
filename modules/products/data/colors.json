@@ -1,0 +1,220 @@
+{
+    "colors":[
+        {
+          "value": "Autre",
+          "id": 0,
+          "label": "Autre",
+          "name": "other"
+        },
+        {
+          "value": "Multicouleur",
+          "id": 1,
+          "label": "Multicouleur",
+          "name": "multicolor"
+        },
+        {
+          "id": 2,
+          "name": "red",
+          "value": "#ff0000",
+          "label": "Rouge"
+        },
+        {
+          "id": 3,
+          "value": "#00ff00",
+          "label": "Vert",
+          "name": "green"
+        },
+        {
+          "id": 4,
+          "value": "#0000ff",
+          "label": "Bleu",
+          "name": "blue"
+        },
+        {
+          "id": 5,
+          "value": "#ffffff",
+          "label": "Blanc",
+          "name": "white"
+        },
+        {
+          "id": 6,
+          "value": "#000000",
+          "label": "Noir",
+          "name": "black"
+        },
+        {
+          "id": 7,
+          "value": "#808080",
+          "label": "Gris",
+          "name": "gray"
+        },
+        {
+          "id": 8,
+          "value": "#f6f4f7",
+          "label": "Argenté",
+          "name": "silver"
+        },
+        {
+          "id": 9,
+          "value": "#dbc67a",
+          "label": "Doré",
+          "name": "golden"
+        },
+        {
+          "id": 10,
+          "value": "#e2d7c9",
+          "label": "Beige",
+          "name": "beige"
+        },
+        {
+          "id": 11,
+          "value": "#c08a29",
+          "label": "Camel",
+          "name": "camel"
+        },
+        {
+          "id": 12,
+          "value": "#fbefd7",
+          "label": "Crème",
+          "name": "cream"
+        },
+        {
+          "id": 13,
+          "value": "#723c24",
+          "label": "Marron",
+          "name": "brown"
+        },
+        {
+          "id": 14,
+          "value": "#4c7ed4",
+          "label": "Bleu",
+          "name": "blue2"
+        },
+        {
+          "id": 15,
+          "value": "#86f5f1",
+          "label": "Bleu turquoire",
+          "name": "turquoise"
+        },
+        {
+          "id": 16,
+          "value": "#86d0f7",
+          "label": "Bleu ciel",
+          "name": "sky-blue"
+        },
+        {
+          "id": 17,
+          "value": "#342a80",
+          "label": "Bleu nuit",
+          "name": "midnight-blue"
+        },
+        {
+          "id": 18,
+          "value": "#342a80",
+          "label": "Bleu éléctrique",
+          "name": "electric-blue"
+        },
+        {
+          "id": 19,
+          "value": "#4383a2",
+          "label": "Bleu pétrole",
+          "name": "blue-oil"
+        },
+        {
+          "id": 20,
+          "value": "#4383a2",
+          "label": "Vert bouteille",
+          "name": "green-bottle"
+        },
+        {
+          "id": 21,
+          "value": "#b5dccf",
+          "label": "Vert eau",
+          "name": "water-green"
+        },
+        {
+          "id": 22,
+          "value": "#404c1c",
+          "label": "Kaki",
+          "name": "kaki"
+        },
+        {
+          "id": 23,
+          "value": "#BBD258",
+          "label": "Vert citron",
+          "name": "lime-green"
+        },
+        {
+          "id": 24,
+          "value": "#751622",
+          "label": "Bordeaux",
+          "name": "bordeaux"
+        },
+        {
+          "id": 25,
+          "value": "#943bbd",
+          "label": "Violet",
+          "name": "purple"
+        },
+        {
+          "id": 26,
+          "value": "#943bbd",
+          "label": "Mauve",
+          "name": "mauve"
+        },
+        {
+          "id": 27,
+          "value": "#672e60",
+          "label": "Plum",
+          "name": "plum"
+        },
+        {
+          "id": 28,
+          "value": "#933d1a",
+          "label": "Rouille",
+          "name": "rust"
+        },
+        {
+          "id": 29,
+          "value": "#e56c2b",
+          "label": "Orange",
+          "name": "orange"
+        },
+        {
+          "id": 30,
+          "value": "#e57466",
+          "label": "Corail",
+          "name": "coral"
+        },
+        {
+          "id": 31,
+          "value": "#FFFF00",
+          "label": "Jaune",
+          "name": "yellow"
+        },
+        {
+          "id": 32,
+          "value": "#ecb93f",
+          "label": "Moutarde",
+          "name": "mustard"
+        },
+        {
+          "id": 33,
+          "value": "#e2c2c9",
+          "label": "Rose",
+          "name": "pink"
+        },
+        {
+          "id": 34,
+          "value": "#ca36a8",
+          "label": "Fushia",
+          "name": "fushia"
+        },
+        {
+          "id": 35,
+          "value": "#edb59e",
+          "label": "Pèche",
+          "name": "peach"
+        }
+      ]
+}

@@ -1,0 +1,11 @@
+{
+  "CATEGORY_PING_SUCCESS": "Le Module Categories est opérationnel.",
+  "CATEGORY_INVALID_ID": ".",
+  "CATEGORY_NOT_FOUND": "Category non trouvé.",
+  "CREATE_NO_CLIENT_ERROR": "Au moins un client est requis.",
+  "RESOURCE_NOT_AUTHORIZED": "L'accès à la ressource demandée n'est pas autorisé.",
+  "CATEGORY_ALREADY_EXISTS": "Une category avec le nom {{name}} existe déjà.",
+  "CATEGORY_CREATE_SUCCESS": "Le category {{name}} a été crée avec succès.",
+  "CATEGORY_DELETE_SUCCESS": "Le category {{name}} a été supprimée avec succès.",
+  "CATEGORY_UPDATE_SUCCESS": "Le category {{name}} a été mise à jour avec succès."
+}

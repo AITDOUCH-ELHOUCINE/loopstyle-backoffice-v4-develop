@@ -1,0 +1,11 @@
+{
+  "BANNER_PING_SUCCESS": "Banners module Up & Running.",
+  "BANNER_INVALID_ID": "Invalid banner ID.",
+  "CREATE_NO_CLIENT_ERROR": "At least one client is required.",
+  "BANNER_NOT_FOUND": "Banner not found.",
+  "RESOURCE_NOT_AUTHORIZED": "The access to the requested resource is not authorized",
+  "BANNER_ALREADY_EXISTS": "An banner with the name {{name}} already exists.",
+  "BANNER_CREATE_SUCCESS": "The Banner {{name}} created successfully.",
+  "BANNER_DELETE_SUCCESS": "The Banner {{name}} deleted successfully.",
+  "BANNER_UPDATE_SUCCESS": "The Banner {{name}} updated successfully."
+}

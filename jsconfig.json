@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "paths": {
+      "@packages/*": ["packages/*"],
+      "@helpers/*": ["helpers/*"],
+      "@config/*": ["config/*"],
+      "@modules/*": ["modules/*"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "typeAcquisition": {
+    "include": ["node"]
+  }
+}

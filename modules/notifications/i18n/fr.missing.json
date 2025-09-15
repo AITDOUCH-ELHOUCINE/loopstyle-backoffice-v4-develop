@@ -1,0 +1,5 @@
+{
+  "should have required property 'toUsers'": "should have required property 'toUsers'",
+  "should match \"then\" schema": "should match \"then\" schema",
+  "should NOT be shorter than 24 characters": "should NOT be shorter than 24 characters"
+}

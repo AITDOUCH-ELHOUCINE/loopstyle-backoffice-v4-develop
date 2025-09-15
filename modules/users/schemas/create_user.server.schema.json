@@ -1,0 +1,79 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type":"object",
+      "properties": {
+        "first": {
+          "type": "string"
+        },
+        "last": {
+          "type": "string"
+        }
+      }
+    },
+    "bithdate":{
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "accountEnabled":{
+      "type": "boolean"
+    },
+    "role": {
+      "type": "string",
+     "enum": ["admin","user","operator"]
+    },
+    "fonction": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "address1": {
+      "type": "string"
+    },
+    "address2": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "birthdate": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "countryCode": {
+      "type": "string"
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "coordinates": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "notifEnabled": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "name",
+    "email"
+  ],
+  "additionalProperties": false
+}

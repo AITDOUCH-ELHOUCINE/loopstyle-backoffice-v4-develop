@@ -1,0 +1,9 @@
+{
+  "NOTIFICATION_PING_SUCCESS": "Le Module Notifications est opérationnel.",
+  "NOTIFICATION_INVALID_ID": "ID notification invalid.",
+  "NOTIFICATION_NOT_FOUND": "Notification non trouvé.",
+  "NOTIFICATION_ALREADY_EXISTS": "Une notification avec le nom {{name}} existe déjà.",
+  "NOTIFICATION_CREATE_SUCCESS": "La notification {{name}} a été crée avec succès.",
+  "NOTIFICATION_DELETE_SUCCESS": "La notification {{name}} a été supprimée avec succès.",
+  "NOTIFICATION_UPDATE_SUCCESS": "La notification {{name}} a été mise à jour avec succès."
+}

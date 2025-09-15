@@ -1,0 +1,8 @@
+{
+  "should NOT be shorter than 24 characters": "should NOT be shorter than 24 characters",
+  "should have required property 'name'": "should have required property 'name'",
+  "should NOT be shorter than 2 characters": "should NOT be shorter than 2 characters",
+  "CATEGORY_DELETE_MANY_SUCCESS": "CATEGORY_DELETE_MANY_SUCCESS",
+  "CATEGORY_DELETE_MANY_SUCCESS_plural": "CATEGORY_DELETE_MANY_SUCCESS",
+  "CATEGORY_IDS_REQUIRED": "CATEGORY_IDS_REQUIRED"
+}

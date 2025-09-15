@@ -1,0 +1,11 @@
+{
+  "CATEGORY_PING_SUCCESS": "Categories module Up & Running.",
+  "CATEGORY_INVALID_ID": "Invalid category ID.",
+  "CREATE_NO_CLIENT_ERROR": "At least one client is required.",
+  "CATEGORY_NOT_FOUND": "Category not found.",
+  "RESOURCE_NOT_AUTHORIZED": "The access to the requested resource is not authorized",
+  "CATEGORY_ALREADY_EXISTS": "An category with the name {{name}} already exists.",
+  "CATEGORY_CREATE_SUCCESS": "The Category {{name}} created successfully.",
+  "CATEGORY_DELETE_SUCCESS": "The Category {{name}} deleted successfully.",
+  "CATEGORY_UPDATE_SUCCESS": "The Category {{name}} updated successfully."
+}

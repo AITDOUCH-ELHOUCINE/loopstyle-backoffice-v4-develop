@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "trim": true,
+      "enum": [
+        "text",
+        "media",
+        "location",
+        "invitation"
+      ]
+    },
+    "text": {
+      "type": "string",
+      "trim": true,
+      "minLength": 1
+    },
+    "media": {
+      "type": "string",
+      "trim": true,
+      "minLength": 24
+    },
+    "mediaType": {
+      "type": "string",
+      "trim": true,
+      "minLength": 1
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "coordinates": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": true
+}

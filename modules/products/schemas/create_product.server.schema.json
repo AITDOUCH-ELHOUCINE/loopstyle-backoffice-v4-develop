@@ -1,0 +1,90 @@
+{
+  "additionalProperties": true,
+  "properties": {
+    "address1": {
+      "type": "string"
+    },
+    "address2": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "string"
+    },
+    "category": {
+      "minLength": 24,
+      "type": "string"
+    },
+    "categoryInfo": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "subCategory": {
+         "type": "string"
+        },
+        "size": {
+         "type": "string"
+        }
+        
+      },
+      "type": "object"
+    },
+    "city": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "description": {
+      "default": "",
+      "type": "string"
+    },
+    "images": {
+      "items": {
+        "minLength": 24,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "location": {
+      "properties": {
+        "coordinates": {
+          "type": [
+            "array",
+            "number"
+          ]
+        },
+        "type": {
+          "enum": [
+            "Point"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "price": {
+      "minimum": 0,
+      "type": "number"
+    },
+    "zipcode": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "price",
+    "category",
+    "images",
+    "color"
+  ],
+  "type": "object"
+}

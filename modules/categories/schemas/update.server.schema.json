@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string",
+      "minLength": 24
+    },
+    "isDeleted": {
+      "type": "boolean"
+    },
+    "isEnabled": {
+      "type": "boolean"
+    }
+  },
+  "required": [],
+  "additionalProperties": true
+}

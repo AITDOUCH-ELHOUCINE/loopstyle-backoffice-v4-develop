@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+  <title></title>
+  <style>
+.content {
+  max-width: 500px;
+  margin: auto;
+}
+#order {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+}
+
+#order td, #order th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#order tr:nth-child(even){background-color: #f2f2f2;}
+
+#order tr:hover {background-color: #ddd;}
+
+#order th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #F13758;
+  color: white;
+}
+   .details {
+        background: #F13758;
+        padding: 2px 0 25px 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+</style>
+</head>
+
+<body >
+<div class="content">
+  <!-- Page content -->
+  <p>Bonjour {{name}}, </p>
+  <p></p>
+    <p>Voici vos accès LoopStyle-Conseil:</p>
+    <p>Login  : {{email}}</p>
+  <p>Mot de passe  : {{password}}</p>
+  <p>Adresse du back-office  : {{boUrl}}</p>
+  <br />
+  <p>The {{appName}} Support Team</p>
+</div>
+
+</body>
+
+</html>

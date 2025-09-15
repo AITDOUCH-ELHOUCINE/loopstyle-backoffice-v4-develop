@@ -1,0 +1,9 @@
+{
+  "should NOT have additional properties": "should NOT have additional properties",
+  "ENTITY_INVALID_ID": "ENTITY_INVALID_ID",
+  "ENTITY_NOT_FOUND": "ENTITY_NOT_FOUND",
+  "should NOT be shorter than 6 characters": "should NOT be shorter than 6 characters",
+  "should NOT be shorter than 1 characters": "should NOT be shorter than 1 characters",
+  "should match format \"email\"": "should match format \"email\"",
+  "should be string": "should be string"
+}

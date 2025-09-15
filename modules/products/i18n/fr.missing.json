@@ -1,0 +1,8 @@
+{
+  "should NOT be shorter than 24 characters": "should NOT be shorter than 24 characters",
+  "should NOT be shorter than 1 characters": "should NOT be shorter than 1 characters",
+  "CHANNEL_NOT_FOUND": "CHANNEL_NOT_FOUND",
+  "Product is not available": "Product is not available",
+  "your are not allowed to update this offer": "your are not allowed to update this offer",
+  "should be number": "should be number"
+}

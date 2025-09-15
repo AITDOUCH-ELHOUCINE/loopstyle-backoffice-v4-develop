@@ -1,0 +1,32 @@
+# dependencies
+node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+*.launch
+.settings/
+
+# misc
+/public
+/tmp/*
+/db/*
+/lib/*
+/modules/devtools
+/modules/devtools/*
+/config/sslcerts/*
+.DS_Store
+
+# Logs
+/logs/*.log
+npm-debug.log*
+yarn-error.log
+yarn.lock
+
+# Git files
+*.orig
+!.gitkeep
+
+#npm files
+package-lock.json

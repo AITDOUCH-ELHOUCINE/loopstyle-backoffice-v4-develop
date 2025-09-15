@@ -1,0 +1,6 @@
+{
+  "should NOT be shorter than 2 characters": "should NOT be shorter than 2 characters",
+  "should be string": "should be string",
+  "BANNER_DELETE_MANY_SUCCESS": "BANNER_DELETE_MANY_SUCCESS",
+  "BANNER_DELETE_MANY_SUCCESS_plural": "BANNER_DELETE_MANY_SUCCESS"
+}

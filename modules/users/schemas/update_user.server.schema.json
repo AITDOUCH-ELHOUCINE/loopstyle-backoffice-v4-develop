@@ -1,0 +1,93 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type":"object",
+      "properties": {
+        "first": {
+          "type": "string"
+        },
+        "last": {
+          "type": "string"
+        }
+      }
+    },
+    "bithdate":{
+      "type": "string"
+    },
+    "code": {
+      "type": "number"
+    },
+    "code_str": {
+      "type": "string"
+    },
+    "confirmationContrat": {
+      "type": "boolean"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "fonction": {
+      "type": "string"
+    },
+    "secteur": {
+      "type": "string",
+      "minLength":24
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "user",
+        "operator"
+      ]
+    },
+    "accountEnabled": {
+      "type": "boolean"
+    },
+    "image": {
+      "type": "string"
+    },
+    "address1": {
+      "type": "string"
+    },
+    "address2": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "birthdate": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "countryCode": {
+      "type": "string"
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "coordinates": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "notifEnabled": {
+      "type": "boolean"
+    }
+  },
+  "required": [],
+  "additionalProperties": true
+}

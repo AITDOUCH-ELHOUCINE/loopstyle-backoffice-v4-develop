@@ -1,0 +1,6 @@
+
+####################################################
+# Write here the list of APIs to exclude
+####################################################
+compteurs:admin:create_one
+demande-type:admin:create_one

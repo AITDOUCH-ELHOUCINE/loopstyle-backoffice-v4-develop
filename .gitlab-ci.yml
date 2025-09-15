@@ -1,0 +1,64 @@
+image: node:12.16.0
+
+services:
+  - mongo:4.2.3
+
+variables:
+  NODE_ENV: 'test'
+  MONGODB_URI: 'mongodb://mongo/app-test'
+  STAGING_URL: '$STAGING_URL'
+  STAGING_DEPLOY_SERVER: '$STAGING_DEPLOY_SERVER'
+  STAGING_SSH_PRIVATE_KEY: '$STAGING_SSH_PRIVATE_KEY'
+  STAGING_DEPLOY_PATH: '$STAGING_DEPLOY_PATH'
+  PRODUCTION_URL: '$PRODUCTION_URL'
+  PRODUCTION_DEPLOY_SERVER: '$PRODUCTION_DEPLOY_SERVER'
+  PRODUCTION_SSH_PRIVATE_KEY: '$PRODUCTION_SSH_PRIVATE_KEY'
+  PRODUCTION_DEPLOY_PATH: '$PRODUCTION_DEPLOY_PATH'
+
+cache:
+  paths:
+    - node_modules/
+
+stages:
+  - test
+  - deploy
+
+Run tests:
+  stage: test
+  script:
+    - npm install --unsafe-perm
+    - npm test
+  only:
+    - master
+    - merge_requests
+
+Deploy on staging:
+  stage: deploy
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo -e "$STAGING_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600  ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - bash ./scripts/gitlab-deploy.sh "$STAGING_DEPLOY_SERVER" "$STAGING_DEPLOY_PATH"
+  environment:
+    name: staging
+    url: $STAGING_URL
+  only:
+    - develop
+
+Deploy on production:
+  stage: deploy
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo -e "$PRODUCTION_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600  ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - bash ./scripts/gitlab-deploy.sh "$PRODUCTION_DEPLOY_SERVER" "$PRODUCTION_DEPLOY_PATH"
+  environment:
+    name: production
+    url: $PRODUCTION_URL
+  when: manual
+  only:
+    - master
