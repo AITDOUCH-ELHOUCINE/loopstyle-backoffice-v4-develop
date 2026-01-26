@@ -11,13 +11,19 @@ module.exports = {
     promise: global.Promise,
   },
   lib: {
+    mongoose: {
+      timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
+      },
+    },
     onesignal: {
       clientApp: {
         restApiKey: 'NmE0ZjQ1NzUtMzQ5MS00ODgyLTk5YmYtZjMwMGEzZTBkZTJh',
         appId: '0bd509bc-0694-4b76-bc99-0cd5d1154e1a',
- 
-        ttl: 10800 ,// (3h) Time To Live - In seconds. The notification will be expired if the device does not come back online within this time. The default is 259,200 seconds (3 days) Max is (28 days).
-        priority:10,// Delivery priority through the push server (example GCM/FCM). Pass 10 for high priority or any other integer for normal priority.
+
+        ttl: 10800,// (3h) Time To Live - In seconds. The notification will be expired if the device does not come back online within this time. The default is 259,200 seconds (3 days) Max is (28 days).
+        priority: 10,// Delivery priority through the push server (example GCM/FCM). Pass 10 for high priority or any other integer for normal priority.
         i18n: {
           ACCOUNT_ACTIVATED_EN: 'Your account has been activated',
           ACCOUNT_ACTIVATED_FR: 'Votre compte a été activé',
@@ -32,10 +38,10 @@ module.exports = {
           ORDER_EXPIRED_FR: 'Commande expirée',
 
           NEW_CHAT_MSG_FR: 'Nouveau message',
-          NEW_CHAT_MSG_EN:'Nouveau message',
+          NEW_CHAT_MSG_EN: 'Nouveau message',
 
 
-    
+
 
           TRANSACTION_STARTED_FR: 'En cours de paiement',
           TRANSACTION_STARTED_EN: 'En cours de paiement',
@@ -46,29 +52,29 @@ module.exports = {
           TRANSACTION_CREATED_EN: 'Commande payée',
 
 
-          TRANSACTION_ACCEPTED_EN:  'Commande acceptée',
-          TRANSACTION_ACCEPTED_FR:  'Commande acceptée',
+          TRANSACTION_ACCEPTED_EN: 'Commande acceptée',
+          TRANSACTION_ACCEPTED_FR: 'Commande acceptée',
 
 
-                    
+
           TRANSACTION_DELIVERY_EN: 'En cours de livraison',
           TRANSACTION_DELIVERY_FR: 'En cours de livraison',
 
 
 
           TRANSACTION_COMPLETED_FR: 'Commande recupérée',
-          TRANSACTION_COMPLETED_EN:'Commande recupérée',
+          TRANSACTION_COMPLETED_EN: 'Commande recupérée',
 
 
 
           NEW_OFFER_FR: 'Nouvelle proposition',
-          NEW_OFFER_EN:'Nouvelle proposition',
+          NEW_OFFER_EN: 'Nouvelle proposition',
 
           OFFER_ACCEPTED_FR: 'Proposition acceptée',
-          OFFER_ACCEPTED_EN:'Proposition acceptée',
+          OFFER_ACCEPTED_EN: 'Proposition acceptée',
 
           OFFER_REJECTED_FR: 'Proposition rejeteée',
-          OFFER_REJECTED_EN:'Proposition rejeteée',
+          OFFER_REJECTED_EN: 'Proposition rejeteée',
 
 
 
