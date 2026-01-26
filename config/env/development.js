@@ -58,11 +58,6 @@ module.exports = {
       publicKey: process.env.STRIPE_PUBLISHABLE_KEY || 'STRIPE_PUBLISHABLE_KEY',
       webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || 'STRIPE_WEBHOOK_SECRET',
     },
-    obvy: {
-      apiUrl: 'https://apisandbox.obvy-app.com/api/v1',
-      apiKey: 'f72a256ac7c44a3cbc3e2c94b85b2518',
-      deliveryId: '686a7ee62e574395a682558152f9d3b8',
-    },
   },
   global: {
     utcOffset: 0, // UTC offset in minutes. (GMT+1 => 60)

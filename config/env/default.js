@@ -17,6 +17,11 @@ module.exports = {
         updatedAt: 'updated_at',
       },
     },
+    obvy: {
+      apiUrl: 'https://apisandbox.obvy-app.com/api/v1',
+      apiKey: 'f72a256ac7c44a3cbc3e2c94b85b2518',
+      deliveryId: '686a7ee62e574395a682558152f9d3b8',
+    },
     onesignal: {
       clientApp: {
         restApiKey: 'NmE0ZjQ1NzUtMzQ5MS00ODgyLTk5YmYtZjMwMGEzZTBkZTJh',
