@@ -210,4 +210,8 @@ module.exports = {
     }],
   },
   ],
+  global: {
+    utcOffset: 0, // UTC offset in minutes. (GMT+1 => 60)
+    boUrl: 'https://loopstyle.com/', // backoffice url
+  },
 };

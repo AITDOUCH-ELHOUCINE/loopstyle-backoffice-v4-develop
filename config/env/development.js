@@ -59,8 +59,4 @@ module.exports = {
       webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || 'STRIPE_WEBHOOK_SECRET',
     },
   },
-  global: {
-    utcOffset: 0, // UTC offset in minutes. (GMT+1 => 60)
-    boUrl: 'https://loopstyle.com/', // backoffice url
-  },
 };
