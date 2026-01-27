@@ -25,7 +25,7 @@ const url = require('url');
 const { resolve, join } = require('path');
 const Sentry = require('@sentry/node');
 const Tracing = require('@sentry/tracing');
-const pkg  = require('@modules/../package.json');
+const pkg = require('@modules/../package.json');
 const crons = require('./agenda');
 const { v4: uuidv4 } = require('uuid');
 const MongoStore = require('connect-mongo')(session);
@@ -165,11 +165,11 @@ module.exports.initMiddleware = (app) => {
   // app.use((req, res, next) => {
   //   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   //   const { method } = req;
-  
+
   //   // Parse the URL and the query string using Node's URL module
   //   const parsedUrl = new url.URL(req.originalUrl, `http://${req.get('host')}`);
   //   const queryParams = new url.URLSearchParams(parsedUrl.search);
-  
+
   //   // Create a formatted list of query parameters
   //   let formattedQueries = '';
   //   let i = 1;
@@ -184,13 +184,13 @@ module.exports.initMiddleware = (app) => {
   //     formattedQueries += `${i}: ${key} - ${value}\n`;
   //     i++;
   //   });
-  
+
   //   // console.log(`IP ${ip} ${method} ${req.originalUrl}`);
   //   console.log('Query Parameters:\n' + formattedQueries);
-  
+
   //   return next();
   // });
-  
+
   // Showing stack errors
   app.set('showStackError', true);
 
@@ -234,7 +234,7 @@ module.exports.initMiddleware = (app) => {
       'https://loopstype-bo.devrootapp.com',  // Le domaine de votre BackOffice en production
       'http://localhost:5173'                 // Gardez ceci pour le développement local
     ];
-  
+
     // const corsOptions = {
     //   credentials: true,
     //   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204,
@@ -341,41 +341,27 @@ module.exports.initModulesServerRoutes = (app) => {
   // Add files routes directly to fix file upload endpoint
   try {
     const filesController = require(resolve('./modules/files/controllers/main.server.controller'));
-    
+
     // Files upload endpoint
     app.route('/api/v1/files')
       .post(filesController.multer, filesController.upload);
-    
+
     // File access endpoints
     app.route('/api/v1/files/:fileID')
       .get(filesController.canAccess, filesController.one);
-    
+
     app.route('/api/v1/files/:fileID/view')
       .get(filesController.canAccess, filesController.download(false));
-    
+
     // Bind file parameter middleware
     app.param('fileID', filesController.fileById);
-    
+
     console.log('Files routes loaded successfully');
   } catch (error) {
     console.error('Error loading files routes:', error);
   }
 
-  // Add product rating route
-  try {
-    const productsController = require(resolve('./modules/products/controllers/products.server.controller'));
-    
-    // Product rating endpoint
-    app.route('/api/v1/user/products/:id/rate')
-      .post(
-        auth.isAuthenticated,
-        productsController.rateProduct
-      );
-      
-    console.log('Product rating route loaded successfully');
-  } catch (error) {
-    console.error('Error loading product rating route:', error);
-  }
+
   // Globbing routing files
   config.files.server.routes.forEach((routePath) => {
     // eslint-disable-next-line import/no-dynamic-require,global-require

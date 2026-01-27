@@ -214,11 +214,11 @@ module.exports = async () => {
   const IamModel = model('IAM');
   const RoleModel = model('Role');
 
-  const createIAMIndices$ = promisify(IamModel.createIndexes).bind(IamModel);
-  const createRolesIndices$ = promisify(RoleModel.createIndexes).bind(RoleModel);
+  // const createIAMIndices$ = promisify(IamModel.createIndexes).bind(IamModel);
+  // const createRolesIndices$ = promisify(RoleModel.createIndexes).bind(RoleModel);
 
-  await createIAMIndices$();
-  await createRolesIndices$();
+  // await createIAMIndices$();
+  // await createRolesIndices$();
 
   await seedIAMs();
   await seedRoles();

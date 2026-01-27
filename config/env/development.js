@@ -6,12 +6,9 @@ module.exports = {
       process.env.MONGODB_URI ||
       process.env.MONGOHQ_URL ||
       process.env.MONGOLAB_URI ||
-      `mongodb://${process.env.DB_1_PORT_27017_TCP_ADDR || '127.0.0.1'}`,
+      'mongodb+srv://loopstyle:REDb0OIAs74R8cn@cluster0.plrlmh5.mongodb.net/loopstyle-prod?retryWrites=true&w=majority',
     options: {
-      dbName: 'loopstyle-dev',
-      auth: process.env.MONGODB_USERNAME ? { authSource: 'admin' } : undefined,
-      user: process.env.MONGODB_USERNAME || '',
-      pass: process.env.MONGODB_PASSWORD || '',
+      dbName: 'loopstyle-prod',
       useNewUrlParser: true,
     },
     // Enable mongoose debug mode

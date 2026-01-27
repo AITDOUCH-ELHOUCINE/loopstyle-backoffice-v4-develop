@@ -16,6 +16,7 @@ mongoose.set('strictQuery', false);
 mongoose.set('useFindAndModify', false);
 mongoose.set('bufferCommands', true);
 mongoose.set('bufferTimeoutMS', 30000);
+mongoose.set('autoCreate', false);
 
 // Improved model loading with better error handling
 module.exports.loadModels = (callback) => {
@@ -45,7 +46,7 @@ module.exports.loadModels = (callback) => {
 module.exports.connect = async (callback) => {
   const connectionOptions = {
     ...config.db.options,
-    autoIndex: true,
+    autoIndex: false,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000,
@@ -57,13 +58,13 @@ module.exports.connect = async (callback) => {
 
   try {
     // Setup event listeners before connecting
-    mongoose.connection.on('connecting', () => 
+    mongoose.connection.on('connecting', () =>
       console.log(chalk.blue('Connecting to MongoDB...')));
-    mongoose.connection.on('connected', () => 
+    mongoose.connection.on('connected', () =>
       console.log(chalk.green('MongoDB connected successfully')));
-    mongoose.connection.on('disconnected', () => 
+    mongoose.connection.on('disconnected', () =>
       console.log(chalk.yellow('MongoDB disconnected')));
-    mongoose.connection.on('error', (err) => 
+    mongoose.connection.on('error', (err) =>
       console.error(chalk.red('MongoDB connection error:'), err));
 
     // Establish connection
@@ -120,7 +121,7 @@ const validateAndCoerceNumber = (num, defaultValue) => {
  */
 
 // Query pagination
-mongoose.Query.prototype.paginate = async function({ top = 10, skip = 0 }) {
+mongoose.Query.prototype.paginate = async function ({ top = 10, skip = 0 }) {
   const t = validateAndCoerceNumber(top, 10);
   const s = validateAndCoerceNumber(skip, 0);
 
@@ -140,7 +141,7 @@ mongoose.Query.prototype.paginate = async function({ top = 10, skip = 0 }) {
 };
 
 // Lean pagination
-mongoose.Query.prototype.paginateLean = async function({ top = 10, skip = 0 }) {
+mongoose.Query.prototype.paginateLean = async function ({ top = 10, skip = 0 }) {
   const t = validateAndCoerceNumber(top, 10);
   const s = validateAndCoerceNumber(skip, 0);
 
@@ -160,7 +161,7 @@ mongoose.Query.prototype.paginateLean = async function({ top = 10, skip = 0 }) {
 };
 
 // Aggregate pagination
-mongoose.Aggregate.prototype.paginate = async function({ top = 10, skip = 0 }) {
+mongoose.Aggregate.prototype.paginate = async function ({ top = 10, skip = 0 }) {
   const t = validateAndCoerceNumber(top, 10);
   const s = validateAndCoerceNumber(skip, 0);
 
@@ -182,7 +183,7 @@ mongoose.Aggregate.prototype.paginate = async function({ top = 10, skip = 0 }) {
 };
 
 // Lean aggregate pagination
-mongoose.Aggregate.prototype.paginateLean = async function({ top = 10, skip = 0 }) {
+mongoose.Aggregate.prototype.paginateLean = async function ({ top = 10, skip = 0 }) {
   const t = validateAndCoerceNumber(top, 10);
   const s = validateAndCoerceNumber(skip, 0);
 
