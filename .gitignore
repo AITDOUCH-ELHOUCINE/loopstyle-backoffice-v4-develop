@@ -8,6 +8,11 @@ node_modules
 *.launch
 .settings/
 
+# Environment variables
+.env/
+.env
+*.env
+
 # misc
 /public
 /tmp/*
@@ -20,6 +25,7 @@ node_modules
 
 # Logs
 /logs/*.log
+/logs/
 npm-debug.log*
 yarn-error.log
 yarn.lock
@@ -28,5 +34,8 @@ yarn.lock
 *.orig
 !.gitkeep
 
-#npm files
+# npm files
 package-lock.json
+
+# Vercel
+.vercel

@@ -4,11 +4,12 @@ module.exports = {
   db: {
     uri:
       process.env.MONGODB_URI ||
-      process.env.MONGOHQ_URL ||
-      process.env.MONGOLAB_URI ||
       'mongodb+srv://loopstyle:REDb0OIAs74R8cn@cluster0.plrlmh5.mongodb.net/loopstyle-prod?retryWrites=true&w=majority',
     options: {
-      dbName: 'loopstyle-prod',
+      // dbName: 'loopstyle-dev',
+      // auth: process.env.MONGODB_USERNAME ? { authSource: 'admin' } : undefined,
+      // user: process.env.MONGODB_USERNAME || '',
+      // pass: process.env.MONGODB_PASSWORD || '',
       useNewUrlParser: true,
     },
     // Enable mongoose debug mode
@@ -55,5 +56,9 @@ module.exports = {
       publicKey: process.env.STRIPE_PUBLISHABLE_KEY || 'STRIPE_PUBLISHABLE_KEY',
       webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || 'STRIPE_WEBHOOK_SECRET',
     },
+  },
+  global: {
+    utcOffset: 0, // UTC offset in minutes. (GMT+1 => 60)
+    boUrl: 'https://loopstyle.com/', // backoffice url
   },
 };

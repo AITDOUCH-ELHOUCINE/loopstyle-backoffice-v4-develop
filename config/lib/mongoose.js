@@ -60,8 +60,21 @@ module.exports.connect = async (callback) => {
     // Setup event listeners before connecting
     mongoose.connection.on('connecting', () =>
       console.log(chalk.blue('Connecting to MongoDB...')));
-    mongoose.connection.on('connected', () =>
-      console.log(chalk.green('MongoDB connected successfully')));
+    mongoose.connection.on('connected', () => {
+      const host = mongoose.connection.host;
+      const port = mongoose.connection.port;
+      const dbName = mongoose.connection.name;
+
+      let type = 'Remote Server';
+      if (host === 'localhost' || host === '127.0.0.1') {
+        type = 'Localhost';
+      } else if (host.includes('mongodb.net')) {
+        type = 'Atlas Server';
+      }
+
+      console.log(chalk.green('MongoDB connected successfully'));
+      console.log(chalk.cyan(`DB Connection: ${type} (${host}:${port}/${dbName})`));
+    });
     mongoose.connection.on('disconnected', () =>
       console.log(chalk.yellow('MongoDB disconnected')));
     mongoose.connection.on('error', (err) =>

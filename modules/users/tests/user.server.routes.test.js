@@ -26,7 +26,7 @@ let userTmp;
 describe('User CRUD tests', () => {
   before(async () => {
     // Get application
-    app = await express.init(mongoose.connection.db);
+    app = await express.init(mongoose);
     agent = request.agent(app);
   });
 
@@ -131,7 +131,7 @@ describe('User CRUD tests', () => {
   });
 
   it('should be able to retrieve a list of users if admin', async () => {
-    user.roles = ['user', 'admin'];
+    user.roles = ['admin'];
 
     await user.save();
     await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
@@ -142,7 +142,7 @@ describe('User CRUD tests', () => {
 
   it('should be able to get a single user details if admin', async () => {
     const { _id: id } = user;
-    user.roles = ['user', 'admin'];
+    user.roles = ['admin'];
 
     await user.save();
     await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
@@ -155,7 +155,7 @@ describe('User CRUD tests', () => {
   });
 
   it('should be able to update a single user details if admin', async () => {
-    user.roles = ['user', 'admin'];
+    user.roles = ['admin'];
 
     await user.save();
     await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
@@ -182,7 +182,7 @@ describe('User CRUD tests', () => {
   });
 
   it('should be able to delete a single user if admin', async () => {
-    user.roles = ['user', 'admin'];
+    user.roles = ['admin'];
 
     await user.save();
     await agent.post('/api/v1/auth/signin').send(credentials).expect(200);

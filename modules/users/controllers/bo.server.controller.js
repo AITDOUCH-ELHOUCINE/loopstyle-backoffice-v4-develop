@@ -13,4 +13,5 @@ module.exports = _.extend(
   require('./bo/bo.profile.server.controller'),
   require('./bo/bo.server.controller'),
   require('./bo/bo.users.server.controller'),
+  require('./bo/bo.admins.server.controller'),
 );

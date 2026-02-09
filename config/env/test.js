@@ -1,15 +1,11 @@
 module.exports = {
   db: {
-    uri:
-      process.env.MONGODB_URI ||
-      process.env.MONGOHQ_URL ||
-      process.env.MONGOLAB_URI ||
-      `mongodb://${process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost'}/app-test`,
-    options: {
-      user: '',
-      pass: '',
-      useNewUrlParser: true,
-    },
+    uri: 'mongodb+srv://loopstyle:REDb0OIAs74R8cn@cluster0.plrlmh5.mongodb.net/loopstyle-test?retryWrites=true&w=majority',
+    // options: {
+    //   user: '',
+    //   pass: '',
+    //   useNewUrlParser: true,
+    // },
     // Enable mongoose debug mode
     debug: process.env.MONGODB_DEBUG || false,
     fake: true,
@@ -32,6 +28,11 @@ module.exports = {
           verbose: false,
         },
       },
+    },
+  },
+  lib: {
+    obvy: {
+      apiUrl: 'http://localhost:9999/fake-obvy-api',
     },
   },
 };

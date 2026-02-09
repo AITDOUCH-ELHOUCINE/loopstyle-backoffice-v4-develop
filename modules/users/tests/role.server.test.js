@@ -1,5 +1,6 @@
+const mongoose = require('mongoose');
 const request = require('supertest');
-const { model, connection, Types } = require('mongoose');
+const { model, connection, Types } = mongoose;
 const { expect } = require('chai');
 
 const { createUser } = require('@helpers/utils');
@@ -28,7 +29,7 @@ let agent;
 describe('Role tests', () => {
   before(async () => {
     // Get application
-    app = await express.init(connection.db);
+    app = await express.init(mongoose);
     agent = request.agent(app);
   });
   describe('Create new role', () => {

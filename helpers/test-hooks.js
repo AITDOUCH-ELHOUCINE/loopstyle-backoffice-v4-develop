@@ -6,12 +6,19 @@ process.env.ADMIN_VALIDATE = false;
 require('./polyfill');
 
 const mongoose = require('../config/lib/mongoose');
+const nock = require('nock');
 
 let dataBase;
 
 mongoose.loadModels();
 
 suiteSetup((done) => {
+  // Mock Obvy API
+  nock('http://localhost:9999')
+    .persist()
+    .post('/fake-obvy-api/user')
+    .reply(200, { id: 'fake-obvy-id', status: 'success' });
+
   mongoose.connect((db) => {
     dataBase = db;
     done();

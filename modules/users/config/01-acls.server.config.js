@@ -63,7 +63,7 @@ module.exports = (app, db, config) => {
     return async (req, res, next) => {
       const { iams, user } = req;
 
-     
+
       const roles = user && Array.isArray(user.roles) ? user.roles : ['guest'];
 
 
@@ -142,7 +142,7 @@ module.exports = (app, db, config) => {
 
       next();
     });
-    
+
 
     // Parse the routes
     if (Array.isArray(m.routes)) {
@@ -158,8 +158,8 @@ module.exports = (app, db, config) => {
           return;
         }
 
-        let routeTmp = is_prefix_dynamic? r.route(m.prefix + route.path):  r.route(route.path);
-        
+        let routeTmp = is_prefix_dynamic ? r.route(m.prefix + route.path) : r.route(route.path);
+
         let allMiddlwares = route.all || route['*'];
 
         if (allMiddlwares && !Array.isArray(allMiddlwares)) {
@@ -232,11 +232,13 @@ module.exports = (app, db, config) => {
 
     // Add the router to the app with the prefix
     if (m.is_global === true) {
+      console.log(`+ Mounting global router at: ${m.prefix}`);
       app.use(m.prefix, r);
     } else if (is_prefix_dynamic) {
-
-      app.use(config.app.prefix , r); 
+      console.log(`+ Mounting dynamic router at: ${config.app.prefix}`);
+      app.use(config.app.prefix, r);
     } else {
+      console.log(`+ Mounting router at: ${config.app.prefix + m.prefix}`);
       app.use(config.app.prefix + m.prefix, r);
     }
   });

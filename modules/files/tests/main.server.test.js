@@ -30,7 +30,7 @@ let agent;
 describe('tests for module "files-manager"', () => {
   before(async () => {
     // Get application
-    app = await express.init(connection.db);
+    app = await express.init(mongoose);
     agent = request.agent(app);
   });
 
@@ -52,7 +52,7 @@ describe('tests for module "files-manager"', () => {
 
   afterEach(async () => {
     await Promise.all([
-      User.remove(),
+      User.deleteMany({}),
     ]);
   });
 });
