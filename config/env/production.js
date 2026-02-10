@@ -2,9 +2,7 @@ const { resolve } = require('path');
 
 module.exports = {
   db: {
-    uri:
-      process.env.MONGODB_URI ||
-      'mongodb+srv://loopstyle:REDb0OIAs74R8cn@cluster0.plrlmh5.mongodb.net/loopstyle-prod?retryWrites=true&w=majority',
+    uri: 'mongodb+srv://loopstyle:REDb0OIAs74R8cn@cluster0.plrlmh5.mongodb.net/loopstyle-prod?retryWrites=true&w=majority',
     options: {
       // dbName: 'loopstyle-prod',
       // auth: { authSource: 'admin' },
