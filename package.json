@@ -9,7 +9,7 @@
     "test:watch": "nodemon --watch modules/**/*.js --exec \"npm test\"",
     "format:write": "prettier --write **/*.{json,md} !package.json",
     "format:test": "prettier **/*.{json,md} --list-different",
-    "start": "nodemon --inspect .",
+    "start": "node .",
     "start:db": "mongod --dbpath db",
     "start:db:dev": "mongod --dbpath db --config db/mongodb.conf",
     "start:dev": "pm2 stop loopstyle-backend-dev-v1 && pm2 delete loopstyle-backend-dev-v1 &&  pm2 start ecosystem.config.js --env development && pm2 log",
