@@ -12,7 +12,7 @@ const { createClient: createRedisClient } = require('redis');
 const { createAdapter: createRedisAdapter } = require('@socket.io/redis-adapter');
 
 const { jwt: jwtConfig } = require('@config/index');
-const jwt_helper = require('../../helpers/jwt');
+const jwt_helper = require('../../helpers/jwt/index');
 const config = require('..');
 
 let io;
