@@ -8,7 +8,11 @@ module.exports = (app) => {
   app.route('/:url(api)/*').get(core.renderNotFound);
 
   // Define application route
-  app.route('/').get(core.renderIndex);
+  // app.route('/').get(core.renderIndex);
+  app.route('/').get((req, res) => {
+    console.log('all is connect');
+    res.send('all is connect');
+  });
   app.route('/socket-test').get(core.renderSocktTest);
   app.route('/*').get(core.renderNotFound);
 };
