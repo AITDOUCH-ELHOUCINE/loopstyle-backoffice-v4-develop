@@ -65,4 +65,7 @@ module.exports = {
       sameSite: 'none',
     },
   },
+  app: {
+    webFolder: 'public',
+  },
 };
