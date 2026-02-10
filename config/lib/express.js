@@ -288,7 +288,7 @@ module.exports.initSession = (app) => {
       },
       saveUninitialized: true,
       resave: true,
-      secret: process.env.SESSION_SECRET || 'VOTRE_SECRET_PAR_DEFAUT',
+      secret: process.env.SESSION_SECRET || '5e2cb19a5b4c51719ce993a22f4571e56f957766fee4feef47d123dc3cbbb004',
       cookie: {
         maxAge: 86400000, // 24 heures en millisecondes
         httpOnly: true,

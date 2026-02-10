@@ -4,9 +4,7 @@ module.exports = {
   db: {
     uri:
       process.env.MONGODB_URI ||
-      process.env.MONGOHQ_URL ||
-      process.env.MONGOLAB_URI ||
-      `mongodb://${process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost'}`,
+      'mongodb+srv://loopstyle:REDb0OIAs74R8cn@cluster0.plrlmh5.mongodb.net/loopstyle-prod?retryWrites=true&w=majority',
     options: {
       dbName: 'loopstyle-prod',
       auth: process.env.MONGODB_USERNAME ? { authSource: 'admin' } : undefined,
@@ -57,6 +55,14 @@ module.exports = {
       secretKey: process.env.STRIPE_SECRET_KEY || 'STRIPE_SECRET_KEY',
       publicKey: process.env.STRIPE_PUBLISHABLE_KEY || 'STRIPE_PUBLISHABLE_KEY',
       webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || 'STRIPE_WEBHOOK_SECRET',
+    },
+  },
+  session: {
+    secret: process.env.SESSION_SECRET || 'super amazing secret',
+    cookie: {
+      secure: true,
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: 'none',
     },
   },
 };

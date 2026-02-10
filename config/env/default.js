@@ -210,6 +210,15 @@ module.exports = {
     }],
   },
   ],
+  session: {
+    secret: process.env.SESSION_SECRET || 'DEFAULT_SESSION_SECRET',
+    name: 'loopstyle.sid',
+    collection: 'sessions',
+    cookie: {
+      httpOnly: true,
+      secure: false,
+    },
+  },
   global: {
     utcOffset: 0, // UTC offset in minutes. (GMT+1 => 60)
     boUrl: 'https://loopstyle.com/', // backoffice url
