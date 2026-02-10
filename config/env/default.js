@@ -10,6 +10,10 @@ module.exports = {
   db: {
     promise: global.Promise,
   },
+  app: {
+    secure: process.env.HTTP_SECURE === 'true',
+    name: process.env.APP_TITLE || 'LoopStyle',
+  },
   lib: {
     mongoose: {
       timestamps: {
