@@ -6,10 +6,10 @@ module.exports = {
       process.env.MONGODB_URI ||
       'mongodb+srv://loopstyle:REDb0OIAs74R8cn@cluster0.plrlmh5.mongodb.net/loopstyle-prod?retryWrites=true&w=majority',
     options: {
-      dbName: 'loopstyle-prod',
-      auth: { authSource: 'admin' },
-      user: process.env.MONGODB_USERNAME || 'loopstyle',
-      pass: process.env.MONGODB_PASSWORD || 'REDb0OIAs74R8cn',
+      // dbName: 'loopstyle-prod',
+      // auth: { authSource: 'admin' },
+      // user: process.env.MONGODB_USERNAME || 'loopstyle',
+      // pass: process.env.MONGODB_PASSWORD || 'REDb0OIAs74R8cn',
       useNewUrlParser: true,
     },
     // Enable mongoose debug mode

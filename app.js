@@ -16,8 +16,10 @@ async function startServer() {
 
 
     const port = process.env.PORT || 3000;
-    app.listen(port, () => {
-      console.log(`Server running on http://localhost:${port}`);
+    const host = '0.0.0.0';
+
+    app.listen(port, host, () => {
+      console.log(`Server running on http://${host}:${port}`);
     });
   } catch (err) {
     console.error('Failed to start server:', err);
