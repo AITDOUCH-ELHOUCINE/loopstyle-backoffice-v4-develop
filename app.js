@@ -19,7 +19,7 @@ async function startServer() {
     const host = '0.0.0.0';
 
     app.listen(port, host, () => {
-      console.log(`Server running on http://${host}:${port}`);
+      console.log(`Server running on http://${host}:6065`);
     });
   } catch (err) {
     console.error('Failed to start server:', err);
