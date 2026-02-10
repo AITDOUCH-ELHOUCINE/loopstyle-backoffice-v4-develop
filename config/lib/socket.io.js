@@ -12,7 +12,7 @@ const { createClient: createRedisClient } = require('redis');
 const { createAdapter: createRedisAdapter } = require('@socket.io/redis-adapter');
 
 const { jwt: jwtConfig } = require('@config/index');
-const jwt_helper = require('@helpers/jwt');
+const jwt_helper = require('../../helpers/jwt');
 const config = require('..');
 
 let io;
@@ -39,20 +39,20 @@ exports.init = (server) => {
   // Redis adapater
   if (config.sockets.adapter === 'redis') {
     const pubClient = createRedisClient({ url: `${config.sockets.redisOptions.uri}` });
-  
+
     pubClient.on('error', (err) => {
       console.error('== Redis Error == ');
       console.error(err.message || err);
       console.error('== == == == == == ');
     });
-  
+
     const subClient = pubClient.duplicate();
-  
+
     Promise.all([pubClient.connect(), subClient.connect()]).then(() => {
       io.adapter(createRedisAdapter(pubClient, subClient));
     });
   }
-    
+
 
   // Intercept Socket.io's handshake request
   io.use((socket, next) => {
@@ -82,10 +82,10 @@ exports.init = (server) => {
       if (authHeader) {
         jwt_helper.decode_jwt_request(socket.request, null, next);
       }
-    }else{
-    // Use the 'cookie-parser' module to parse the request cookies
+    } else {
+      // Use the 'cookie-parser' module to parse the request cookies
       cookieParser(config.sessionSecret)(socket.request, {}, () => {
-      // Get the session id from the request cookies
+        // Get the session id from the request cookies
         const sessionId = socket.request.signedCookies
           ? socket.request.signedCookies[config.sessionKey]
           : false;
