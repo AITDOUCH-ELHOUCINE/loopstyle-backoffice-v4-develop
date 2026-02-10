@@ -80,9 +80,16 @@ module.exports.connect = async (callback) => {
     mongoose.connection.on('error', (err) =>
       console.error(chalk.red('MongoDB connection error:'), err));
 
+    // Debug: Log the full URI details
+    console.log(chalk.blue('=== MongoDB Connection Debug ==='));
+    console.log(chalk.blue(`URI Type: ${typeof config.db.uri}`));
+    console.log(chalk.blue(`URI Length: ${config.db.uri ? config.db.uri.length : 'undefined'}`));
+    console.log(chalk.blue(`URI Value: ${config.db.uri}`));
+
     // Log the connection URI (mask password for security)
     const maskedUri = config.db.uri.replace(/:([^:@]+)@/, ':****@');
-    console.log(chalk.blue(`Attempting to connect to: ${maskedUri}`));
+    console.log(chalk.blue(`Masked URI: ${maskedUri}`));
+    console.log(chalk.blue('================================'));
 
     // Establish connection
     await mongoose.connect(config.db.uri, connectionOptions);
