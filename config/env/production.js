@@ -67,5 +67,8 @@ module.exports = {
   },
   app: {
     webFolder: 'public',
+    cors: {
+      enabled: true,
+    },
   },
 };
