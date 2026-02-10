@@ -35,14 +35,20 @@ module.exports = {
       },
     },
   },
-  lib: {
-    sockets: {
-      public: true,
-      adapter: '',
-      redisOptions: {
-        uri: process.env.REDIS_URI || 'redis://localhost:6379',
-      },
+  sockets: {
+    public: true,
+    adapter: '',
+    redisOptions: {
+      uri: process.env.REDIS_URI || 'redis://localhost:6379',
     },
+  },
+  filesManager: {
+    bucket: 'uploads',
+    uploader: {
+      strategy: 'gridfs',
+    },
+  },
+  lib: {
     googlemaps: {
       apiKey: '',
     },

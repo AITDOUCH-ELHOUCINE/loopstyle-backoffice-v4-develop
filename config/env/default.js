@@ -14,6 +14,19 @@ module.exports = {
     secure: process.env.HTTP_SECURE === 'true',
     name: process.env.APP_TITLE || 'LoopStyle',
   },
+  filesManager: {
+    bucket: 'uploads',
+    uploader: {
+      strategy: 'gridfs',
+    },
+  },
+  sockets: {
+    public: true,
+    adapter: '',
+    redisOptions: {
+      uri: process.env.REDIS_URI || 'redis://localhost:6379',
+    },
+  },
   lib: {
     mongoose: {
       timestamps: {
