@@ -567,7 +567,7 @@ module.exports.init = async (mongoose) => {
   await this.runBootstrap(app, mongoose);
 
   // Initialize Agenda Jobs (crons)
-  this.initCrons(app);
+  // this.initCrons(app);
 
   // Initialize local variables
   this.initLocalVariables(app, mongoose);
