@@ -8,8 +8,8 @@ module.exports = {
     options: {
       dbName: 'loopstyle-prod',
       auth: process.env.MONGODB_USERNAME ? { authSource: 'admin' } : undefined,
-      user: process.env.MONGODB_USERNAME || '',
-      pass: process.env.MONGODB_PASSWORD || '',
+      user: process.env.MONGODB_USERNAME || 'loopstyle',
+      pass: process.env.MONGODB_PASSWORD || 'REDb0OIAs74R8cn',
       useNewUrlParser: true,
     },
     // Enable mongoose debug mode
