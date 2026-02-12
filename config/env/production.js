@@ -2,12 +2,16 @@ const { resolve } = require('path');
 
 module.exports = {
   db: {
-    uri: 'mongodb+srv://loopstyle:REDb0OIAs74R8cn@cluster0.plrlmh5.mongodb.net/loopstyle-prod?retryWrites=true&w=majority',
+    uri:
+      process.env.MONGO_URI ||
+      process.env.MONGODB_URI ||
+      process.env.MONGOHQ_URL ||
+      process.env.MONGOLAB_URI ||
+      'mongodb+srv://loopstyle:REDb0OIAs74R8cn@cluster0.plrlmh5.mongodb.net/loopstyle-prod?retryWrites=true&w=majority',
     options: {
-      // dbName: 'loopstyle-prod',
-      // auth: { authSource: 'admin' },
-      // user: process.env.MONGODB_USERNAME || 'loopstyle',
-      // pass: process.env.MONGODB_PASSWORD || 'REDb0OIAs74R8cn',
+      auth: process.env.MONGODB_USERNAME ? { authSource: 'admin' } : undefined,
+      user: process.env.MONGODB_USERNAME || '',
+      pass: process.env.MONGODB_PASSWORD || '',
       useNewUrlParser: true,
     },
     // Enable mongoose debug mode
@@ -18,34 +22,35 @@ module.exports = {
     // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
     format: process.env.LOG_FORMAT || 'combined',
     options: {
-      //      stream: {
-      //   directoryPath: process.env.LOG_DIR_PATH || resolve('logs'),
-      //   fileName: process.env.LOG_FILE || 'access.log',
-      //   rotatingLogs: {
-      //     // for more info on rotating logs - https://github.com/holidayextras/file-stream-rotator#usage
-      //     active: process.env.LOG_ROTATING_ACTIVE === 'true', // activate to use rotating logs
-      //     fileName: process.env.LOG_ROTATING_FILE || 'access-%DATE%.log', // if rotating logs are active, this fileName setting will be used
-      //     frequency: process.env.LOG_ROTATING_FREQUENCY || 'daily',
-      //     verbose: process.env.LOG_ROTATING_VERBOSE === 'true',
-      //   },
-      // },
-      stream: process.stdout,
-    },
-  },
-  sockets: {
-    public: true,
-    adapter: '',
-    redisOptions: {
-      uri: process.env.REDIS_URI || 'redis://localhost:6379',
-    },
-  },
-  filesManager: {
-    bucket: 'uploads',
-    uploader: {
-      strategy: 'gridfs',
+      // Stream defaults to process.stdout
+      // Uncomment/comment to toggle the logging to a log on the file system
+      stream: {
+        directoryPath: process.env.LOG_DIR_PATH || resolve('logs'),
+        fileName: process.env.LOG_FILE || 'access.log',
+        rotatingLogs: {
+          // for more info on rotating logs - https://github.com/holidayextras/file-stream-rotator#usage
+          active: process.env.LOG_ROTATING_ACTIVE === 'true', // activate to use rotating logs
+          fileName: process.env.LOG_ROTATING_FILE || 'access-%DATE%.log', // if rotating logs are active, this fileName setting will be used
+          frequency: process.env.LOG_ROTATING_FREQUENCY || 'daily',
+          verbose: process.env.LOG_ROTATING_VERBOSE === 'true',
+        },
+      },
     },
   },
   lib: {
+    mongoose: {
+      timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
+      },
+    },
+    sockets: {
+      public: true,
+      adapter: '',
+      redisOptions: {
+        uri: process.env.REDIS_URI || 'redis://localhost:6379',
+      },
+    },
     googlemaps: {
       apiKey: '',
     },
@@ -59,19 +64,14 @@ module.exports = {
       publicKey: process.env.STRIPE_PUBLISHABLE_KEY || 'STRIPE_PUBLISHABLE_KEY',
       webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || 'STRIPE_WEBHOOK_SECRET',
     },
-  },
-  session: {
-    secret: process.env.SESSION_SECRET || 'super amazing secret',
-    cookie: {
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000,
-      sameSite: 'none',
+    obvy: {
+      apiUrl: 'https://apisandbox.obvy-app.com/api/v1',
+      apiKey: 'f72a256ac7c44a3cbc3e2c94b85b2518',
+      deliveryId: '686a7ee62e574395a682558152f9d3b8',
     },
   },
-  app: {
-    webFolder: 'public',
-    cors: {
-      enabled: true,
-    },
+  global: {
+    utcOffset: 0, // UTC offset in minutes. (GMT+1 => 60)
+    boUrl: 'https://loopstyle.com/', // backoffice url
   },
 };

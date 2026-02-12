@@ -25,7 +25,7 @@ const url = require('url');
 const { resolve, join } = require('path');
 const Sentry = require('@sentry/node');
 const Tracing = require('@sentry/tracing');
-const pkg = require('@modules/../package.json');
+const pkg  = require('@modules/../package.json');
 const crons = require('./agenda');
 const { v4: uuidv4 } = require('uuid');
 const MongoStore = require('connect-mongo')(session);
@@ -39,6 +39,9 @@ const { modules } = config.files.server;
 const dotenv = require('dotenv');
 
 dotenv.config(); // Charger les variables d'environnement
+
+// Reference to all exported helpers in this module
+const expressConfig = module.exports;
 
 
 /**
@@ -131,9 +134,6 @@ module.exports.runBootstrap = (app, mongoose) => {
  * Initialize application middleware
  */
 module.exports.initMiddleware = (app) => {
-  // Indique à Express de faire confiance au premier proxy sur le chemin de la requête
-  // C'est ESSENTIEL pour que les cookies `secure: true` fonctionnent derrière un proxy (comme sur Render)
-  app.set('trust proxy', 1);
   const { locals } = app;
   // stripe
   app.use(
@@ -165,11 +165,11 @@ module.exports.initMiddleware = (app) => {
   // app.use((req, res, next) => {
   //   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   //   const { method } = req;
-
+  
   //   // Parse the URL and the query string using Node's URL module
   //   const parsedUrl = new url.URL(req.originalUrl, `http://${req.get('host')}`);
   //   const queryParams = new url.URLSearchParams(parsedUrl.search);
-
+  
   //   // Create a formatted list of query parameters
   //   let formattedQueries = '';
   //   let i = 1;
@@ -184,13 +184,13 @@ module.exports.initMiddleware = (app) => {
   //     formattedQueries += `${i}: ${key} - ${value}\n`;
   //     i++;
   //   });
-
+  
   //   // console.log(`IP ${ip} ${method} ${req.originalUrl}`);
   //   console.log('Query Parameters:\n' + formattedQueries);
-
+  
   //   return next();
   // });
-
+  
   // Showing stack errors
   app.set('showStackError', true);
 
@@ -229,33 +229,14 @@ module.exports.initMiddleware = (app) => {
   app.use(express.static(config.app.webFolder));
 
   if (config.app.cors.enabled) {
-    //const whitelist = process.env.WHITE_LIST_DOMAINS;
-    const whitelist = [
-      'https://loopstype-bo.devrootapp.com',  // Le domaine de votre BackOffice en production
-      'http://localhost:5173'                 // Gardez ceci pour le développement local
-    ];
-
-    // const corsOptions = {
-    //   credentials: true,
-    //   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204,
-    //   origin(origin, callback) {
-    //     // allow all
-    //     callback(null, true);
-    //   },
-    // };
-
+    // const whitelist = process.env.WHITE_LIST_DOMAINS;
     const corsOptions = {
       credentials: true,
-      optionsSuccessStatus: 200,
-      origin: function (origin, callback) {
-        // Si le domaine de la requête est dans notre liste blanche (ou si la requête ne vient pas d'un navigateur)
-        if (whitelist.indexOf(origin) !== -1 || !origin) {
-          callback(null, true);
-        } else {
-          // Sinon, on refuse la requête
-          callback(new Error('Not allowed by CORS'));
-        }
-      }
+      optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204,
+      origin(origin, callback) {
+        // allow all
+        callback(null, true);
+      },
     };
     app.use(cors(corsOptions));
   }
@@ -288,14 +269,8 @@ module.exports.initSession = (app) => {
       },
       saveUninitialized: true,
       resave: true,
-      secret: process.env.SESSION_SECRET || '5e2cb19a5b4c51719ce993a22f4571e56f957766fee4feef47d123dc3cbbb004',
-      cookie: {
-        maxAge: 86400000, // 24 heures en millisecondes
-        httpOnly: true,
-        // La modification cruciale est ici
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-        secure: process.env.NODE_ENV === 'production', // Mettre à `true` en production
-      },
+      secret,
+      cookie,
       name,
       store: new MongoStore({
         collection,
@@ -341,26 +316,25 @@ module.exports.initModulesServerRoutes = (app) => {
   // Add files routes directly to fix file upload endpoint
   try {
     const filesController = require(resolve('./modules/files/controllers/main.server.controller'));
-
+    
     // Files upload endpoint
     app.route('/api/v1/files')
       .post(filesController.multer, filesController.upload);
-
+    
     // File access endpoints
     app.route('/api/v1/files/:fileID')
       .get(filesController.canAccess, filesController.one);
-
+    
     app.route('/api/v1/files/:fileID/view')
       .get(filesController.canAccess, filesController.download(false));
-
+    
     // Bind file parameter middleware
     app.param('fileID', filesController.fileById);
-
+    
     console.log('Files routes loaded successfully');
   } catch (error) {
     console.error('Error loading files routes:', error);
   }
-
 
   // Globbing routing files
   config.files.server.routes.forEach((routePath) => {
@@ -559,48 +533,61 @@ module.exports.initErrorRoutes = (app) => {
 /**
  * Initialize the Express application
  */
-module.exports.init = async (mongoose) => {
+async function buildApp(mongoose) {
   // Initialize express app
   const app = express();
 
   // Run bootstrap files
-  await this.runBootstrap(app, mongoose);
+  await expressConfig.runBootstrap(app, mongoose);
 
   // Initialize Agenda Jobs (crons)
-  // this.initCrons(app);
+  expressConfig.initCrons(app);
 
   // Initialize local variables
-  this.initLocalVariables(app, mongoose);
+  expressConfig.initLocalVariables(app, mongoose);
 
-  // Initialize sentry
-  // this.initSentry(app);
+  // Initialize sentry (disabled by default)
+  // expressConfig.initSentry(app);
 
   // Initialize Express middleware
-  this.initMiddleware(app);
+  expressConfig.initMiddleware(app);
 
   // Initialize Express view engine
-  this.initViewEngine(app);
+  expressConfig.initViewEngine(app);
 
   // Initialize Express session
-  this.initSession(app, mongoose);
+  expressConfig.initSession(app, mongoose);
 
   // Initialize modules server i18n
-  this.initI18n(app);
+  expressConfig.initI18n(app);
 
   // Initialize Modules configuration
-  this.initModulesConfiguration(app, mongoose);
+  expressConfig.initModulesConfiguration(app, mongoose);
 
   // Initialize Helmet security headers
-  this.initHelmetHeaders(app);
+  expressConfig.initHelmetHeaders(app);
 
   // Initialize modules server routes
-  this.initModulesServerRoutes(app);
+  expressConfig.initModulesServerRoutes(app);
 
   // Initialize error routes
-  this.initErrorRoutes(app);
+  expressConfig.initErrorRoutes(app);
+
+  return app;
+}
+
+// Expose a helper to build an Express app without starting an HTTP server.
+// This is useful for serverless platforms like Vercel.
+module.exports.buildApp = buildApp;
+
+/**
+ * Initialize the Express application with an HTTP server (classic mode)
+ */
+module.exports.init = async (mongoose) => {
+  const app = await buildApp(mongoose);
 
   // create the server, then return the instance
-  const server = this.createServer(app);
+  const server = expressConfig.createServer(app);
 
   // Configure Socket.io
   initSocketIO(server);
