@@ -352,6 +352,9 @@ function initGlobalConfig() {
   // Get the current config
   const environmentConfig = require(join(process.cwd(), 'config/env/', process.env.NODE_ENV)) || {};
 
+  // Application-level configuration (app name, port, secure, etc.)
+  const appConfig = require(join(process.cwd(), 'config/app'));
+
   // Expose configuration utilities
   const utils = {
     getGlobbedPaths,
@@ -359,8 +362,8 @@ function initGlobalConfig() {
     env,
   };
 
-  // Merge config files
-  let config = _.merge({ utils }, defaultConfig, environmentConfig);
+  // Merge config files (default, environment, and app-level config)
+  let config = _.merge({ utils }, defaultConfig, environmentConfig, appConfig);
 
   // read package.json for MAIN project information
   const pkg = require(resolve('./package.json'));
