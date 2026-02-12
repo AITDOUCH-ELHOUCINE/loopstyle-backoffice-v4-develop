@@ -37,5 +37,29 @@ module.exports = {
         process.env.APP_SSL_CA || path.resolve('config/sslcerts/bundle.pem'),
     },
   },
+
+  // Default Express session configuration
+  session: {
+    // Cookie name
+    name: process.env.SESSION_NAME || 'loopstyle.sid',
+
+    // Session secret
+    secret:
+      process.env.SESSION_SECRET ||
+      process.env.SESSIONS_MODULE_SECRET ||
+      'DEFAULT_SESSION_SECRET',
+
+    // Mongo collection name for sessions
+    collection: process.env.SESSION_COLLECTION || 'sessions',
+
+    // Cookie options
+    cookie: {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: isTrue(process.env.SESSION_SECURE || process.env.APP_SECURE || 'false'),
+      maxAge: Number(process.env.SESSION_MAX_AGE || 1000 * 60 * 60 * 24 * 7), // 7 days
+    },
+  },
 };
+
 
