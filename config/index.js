@@ -189,6 +189,12 @@ function validateSessionSecret(config, testing) {
     return true;
   }
 
+  // On some environments (like serverless or minimal configs), session
+  // configuration may be omitted. In that case, skip this validation.
+  if (!config.session || !config.session.secret) {
+    return true;
+  }
+
   if (config.session.secret === 'DEFAULT_SESSION_SECRET') {
     if (!testing) {
       debug(
