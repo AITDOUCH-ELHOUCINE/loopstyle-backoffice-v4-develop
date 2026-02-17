@@ -13,8 +13,9 @@ const {
   deliveryId, // createe depui le backoffice obvy menu (Pages hébergées)
 } = config.lib.obvy;
 
-
 const { publicAddress, prefix } = config.app;
+
+const isObvyEnabled = String(process.env.OBVY_ENABLED || 'true').toLowerCase() === 'true';
 
 
 
@@ -31,6 +32,10 @@ const axiosErroMessage = (err) => {
 
 exports.createObvyPostalDelivery = async({product,buyer}) => {
   try {
+
+    if (!isObvyEnabled) {
+      throw new Error('Obvy integration is disabled');
+    }
 
     const {
       _id:productId,
@@ -186,6 +191,10 @@ exports.createObvyPostalDelivery = async({product,buyer}) => {
 exports.getObvyEventById = async({eventId}) => {
   try {
 
+    if (!isObvyEnabled) {
+      throw new Error('Obvy integration is disabled');
+    }
+
 
     if(!eventId) {
       throw new Error('eventId not found');
@@ -228,6 +237,10 @@ exports.getObvyEventById = async({eventId}) => {
   
 exports.getObvyTransactionById = async({transactionId}) => {
   try {
+
+    if (!isObvyEnabled) {
+      throw new Error('Obvy integration is disabled');
+    }
 
 
     if(!transactionId) {

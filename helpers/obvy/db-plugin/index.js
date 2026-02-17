@@ -15,6 +15,8 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
+const isObvyEnabled = String(process.env.OBVY_ENABLED || 'true').toLowerCase() === 'true';
+
 
 
 
@@ -115,22 +117,24 @@ module.exports = function(schema) {
   });
 
 
-  // Remove blocking pre-save network call and use post-save fire-and-forget instead
-  schema.post('save', function(doc) {
-    // Avoid parallel syncs on the same instance
-    if (doc.__obvySyncInFlight) return;
-    doc.__obvySyncInFlight = true;
-    Promise.resolve()
-      .then(() => doc.syncObvyUser())
-      .catch((error) => {
-        console.error('createObvyUser Error');
-        console.error(error);
-        console.error(`createObvyUser :${axiosErroMessage(error)}`);
-      })
-      .finally(() => {
-        doc.__obvySyncInFlight = false;
-      });
-  });
+  // Automatically sync Obvy user profile after save, if Obvy is enabled
+  if (isObvyEnabled) {
+    schema.post('save', function(doc) {
+      // Avoid parallel syncs on the same instance
+      if (doc.__obvySyncInFlight) return;
+      doc.__obvySyncInFlight = true;
+      Promise.resolve()
+        .then(() => doc.syncObvyUser())
+        .catch((error) => {
+          console.error('createObvyUser Error');
+          console.error(error);
+          console.error(`createObvyUser :${axiosErroMessage(error)}`);
+        })
+        .finally(() => {
+          doc.__obvySyncInFlight = false;
+        });
+    });
+  }
 
   /**
    * Delete Card By Id
@@ -165,6 +169,10 @@ module.exports = function(schema) {
    */
   schema.methods.syncObvyUser = async function () {
     try {
+      // If Obvy integration is disabled, skip silently
+      if (!isObvyEnabled) {
+        return true;
+      }
       const user=this;
 
       // Skip if already synced
