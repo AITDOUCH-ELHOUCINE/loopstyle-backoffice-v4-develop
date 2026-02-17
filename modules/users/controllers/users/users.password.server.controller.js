@@ -81,8 +81,15 @@ exports.forgot = async function forgot(req, res, next) {
       appName: config.app.title,
       url: `${httpTransport + req.headers.host + config.app.prefix}/auth/reset/${token}`,
     });
-    user.sendMail('Nouveau mot de passe plateforme LoopStyle', html);
+
+    const mailResult = await user.sendMail('Nouveau mot de passe plateforme LoopStyle', html);
+    if (mailResult) {
+      console.info('[ForgotPassword] Reset password email sent to', user.email);
+    } else {
+      console.error('[ForgotPassword] Failed to send reset password email to', user.email);
+    }
   } catch (e) {
+    console.error('[ForgotPassword] Error while preparing or sending email:', e);
     return next(e);
   }
 
@@ -168,8 +175,15 @@ exports.generateNewPassword = async function generateNewPassword(req, res, next)
       appName: config.app.title,
       newPassword,
     });
-    user.sendMail('Nouveau mot de passe plateforme LoopStyle', html);
+
+    const mailResult = await user.sendMail('Nouveau mot de passe plateforme LoopStyle', html);
+    if (mailResult) {
+      console.info('[GenerateNewPassword] New password email sent to', user.email);
+    } else {
+      console.error('[GenerateNewPassword] Failed to send new password email to', user.email);
+    }
   } catch (e) {
+    console.error('[GenerateNewPassword] Error while preparing or sending email:', e);
     return next(e);
   }
 
