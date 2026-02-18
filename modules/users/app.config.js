@@ -32,7 +32,7 @@ module.exports = (config) => {
       'not_payed', // Free plan
       'bayed', // Plan payed
     ],
-    private_attrs: ['salt', 'password', 'iams', '__v','location'],
+    private_attrs: ['salt', 'password', 'iams', '__v', 'location'],
     public_attrs: [
       'name',
       'email',

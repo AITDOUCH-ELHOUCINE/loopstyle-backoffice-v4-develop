@@ -9,7 +9,7 @@ let isSendGrid = false;
 
 if (config.mailer.options && config.mailer.options.auth && config.mailer.options.auth.pass) {
   smtpTransport = nodemailer.createTransport(config.mailer.options);
-}else if (config.sendGrid && config.sendGrid.key && config.sendGrid.key !== 'SENDGRID_API_KEY') {
+} else if (config.sendGrid && config.sendGrid.key && config.sendGrid.key !== 'SENDGRID_API_KEY') {
   isSendGrid = true;
   const sgKey = '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';
   // sgMail.setApiKey(config.sendGrid.key);
@@ -60,28 +60,28 @@ async function sendMail(subject, body, emails = [], opts = {}) {
 }
 
 
-export const sendNewAdminEmail = async(admin) => {
-  try{
+export const sendNewAdminEmail = async (admin) => {
+  try {
 
 
     const mailGenerator = new Mailgen({
-      theme:'default',
-      product:{
-        name:config.app.title,
+      theme: 'default',
+      product: {
+        name: config.app.title,
         link: 'http://smelly_cats.com',
       },
     });
 
     const email = {
-      body:{
-        name:'Admin',
-        intro:[
+      body: {
+        name: 'Admin',
+        intro: [
           'Hey !! someone contacted you from our app',
           `From:  ${admin.email}`,
           `Name:  ${admin.name}`,
           'Message:  Bienvenue',
         ],
-        outro:'Bye !!',
+        outro: 'Bye !!',
       },
     };
 
@@ -95,7 +95,7 @@ export const sendNewAdminEmail = async(admin) => {
       {},
     );
     return true;
-  } catch(error){
+  } catch (error) {
     throw error;
   }
 };
