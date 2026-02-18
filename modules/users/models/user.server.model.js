@@ -52,7 +52,13 @@ owasp.config({
 let smtpTransport;
 
 if (config.mailer.options && config.mailer.options.auth && config.mailer.options.auth.pass) {
-  smtpTransport = nodemailer.createTransport(config.mailer.options);
+  // Add explicit timeouts to avoid hanging too long in production
+  smtpTransport = nodemailer.createTransport({
+    ...config.mailer.options,
+    connectionTimeout: Number(process.env.SMTP_CONNECTION_TIMEOUT_MS || 10000),
+    greetingTimeout: Number(process.env.SMTP_GREETING_TIMEOUT_MS || 10000),
+    socketTimeout: Number(process.env.SMTP_SOCKET_TIMEOUT_MS || 20000),
+  });
 }
 
 async function sendMail(subject, body, users = [], opts = {}) {
@@ -75,6 +81,20 @@ async function sendMail(subject, body, users = [], opts = {}) {
 
       return data;
     } catch (e) {
+      // Log SMTP target (no secrets) to debug production connectivity issues
+      try {
+        const { host, port, secure, auth } = (config.mailer && config.mailer.options) || {};
+        console.error('[Mailer] SMTP send failed', {
+          host,
+          port,
+          secure,
+          user: auth && auth.user ? auth.user : undefined,
+          code: e && e.code ? e.code : undefined,
+          command: e && e.command ? e.command : undefined,
+        });
+      } catch (_) {
+        // ignore logging errors
+      }
       console.error(e);
       debug('Error while sending email', e, subject, users);
       return false;
