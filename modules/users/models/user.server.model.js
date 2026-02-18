@@ -19,10 +19,12 @@ const { v4: uuidv4 } = require('uuid');
 const { getIO, googleMaps, getDocId, generateCode } = utils;
 // const generatePassword = require('generate-password');
 const owasp = require('owasp-password-strength-test');
-const nodemailer = require('nodemailer');
+// [SMTP - commented out, switch back if needed]
+// const nodemailer = require('nodemailer');
 const twilio = require('twilio');
-const sgMail = require('@sendgrid/mail');
-const util = require('util');
+// const sgMail = require('@sendgrid/mail');
+// const util = require('util');
+const https = require('https');
 const debug = require('debug')('modules:users:models:users');
 const obvyPlugin = require('@helpers/obvy/db-plugin');
 
@@ -49,59 +51,77 @@ owasp.config({
   minOptionalTestsToPass: 4,
 });
 
-let smtpTransport;
+// [SMTP - commented out, switch back if needed]
+// let smtpTransport;
+// if (config.mailer.options && config.mailer.options.auth && config.mailer.options.auth.pass) {
+//   smtpTransport = nodemailer.createTransport({
+//     ...config.mailer.options,
+//     connectionTimeout: Number(process.env.SMTP_CONNECTION_TIMEOUT_MS || 10000),
+//     greetingTimeout: Number(process.env.SMTP_GREETING_TIMEOUT_MS || 10000),
+//     socketTimeout: Number(process.env.SMTP_SOCKET_TIMEOUT_MS || 20000),
+//   });
+// }
 
-if (config.mailer.options && config.mailer.options.auth && config.mailer.options.auth.pass) {
-  // Add explicit timeouts to avoid hanging too long in production
-  smtpTransport = nodemailer.createTransport({
-    ...config.mailer.options,
-    connectionTimeout: Number(process.env.SMTP_CONNECTION_TIMEOUT_MS || 10000),
-    greetingTimeout: Number(process.env.SMTP_GREETING_TIMEOUT_MS || 10000),
-    socketTimeout: Number(process.env.SMTP_SOCKET_TIMEOUT_MS || 20000),
+// Brevo (Sendinblue) HTTP API sender — works on Render where SMTP is blocked
+function sendBrevoRequest(apiKey, payload) {
+  return new Promise((resolve, reject) => {
+    const body = Buffer.from(JSON.stringify(payload));
+    const options = {
+      hostname: 'api.brevo.com',
+      path: '/v3/smtp/email',
+      method: 'POST',
+      headers: {
+        'api-key': apiKey,
+        'Content-Type': 'application/json',
+        'Content-Length': body.length,
+      },
+    };
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => {
+        try { resolve({ statusCode: res.statusCode, body: JSON.parse(data) }); }
+        catch (e) { resolve({ statusCode: res.statusCode, body: data }); }
+      });
+    });
+    req.on('error', reject);
+    req.write(body);
+    req.end();
   });
 }
 
 async function sendMail(subject, body, users = [], opts = {}) {
-  const msg = {
-    ...opts,
-    to: users,
-    from: config.mailer.from,
-    subject,
-    html: body,
-  };
-
   if (!Array.isArray(users) || users.length === 0) {
     return false;
   }
 
-  if (smtpTransport) {
-    const send = util.promisify(smtpTransport.sendMail).bind(smtpTransport);
-    try {
-      const data = await send(msg);
+  const apiKey = process.env.BREVO_API_KEY;
+  const from = config.mailer.from || process.env.MAILER_FROM || 'Loopstyle';
 
-      return data;
-    } catch (e) {
-      // Log SMTP target (no secrets) to debug production connectivity issues
-      try {
-        const { host, port, secure, auth } = (config.mailer && config.mailer.options) || {};
-        console.error('[Mailer] SMTP send failed', {
-          host,
-          port,
-          secure,
-          user: auth && auth.user ? auth.user : undefined,
-          code: e && e.code ? e.code : undefined,
-          command: e && e.command ? e.command : undefined,
-        });
-      } catch (_) {
-        // ignore logging errors
-      }
-      console.error(e);
-      debug('Error while sending email', e, subject, users);
-      return false;
-    }
+  if (!apiKey) {
+    console.error('[Mailer] BREVO_API_KEY not configured');
+    return false;
   }
 
-  return false;
+  const payload = {
+    sender: { name: from, email: process.env.BREVO_SENDER_EMAIL || 'noreply@loopstyle.com' },
+    to: users.map((email) => ({ email })),
+    subject,
+    htmlContent: body,
+  };
+
+  try {
+    const result = await sendBrevoRequest(apiKey, payload);
+    if (result.statusCode === 200 || result.statusCode === 201) {
+      return result.body;
+    }
+    console.error('[Mailer] Brevo API error', result.statusCode, result.body);
+    return false;
+  } catch (e) {
+    console.error('[Mailer] Brevo API request failed', e);
+    debug('Error while sending email via Brevo API', e, subject, users);
+    return false;
+  }
 }
 /**
  * A Validation function for local strategy properties
@@ -489,7 +509,7 @@ UserSchema.methods.getInfo = async function getInfo() {
 
 
   return {
-    uuid:user.uuid,
+    uuid: user.uuid,
     name: user.name,
     email: user.email,
     phone: user.phone,
@@ -514,7 +534,7 @@ UserSchema.methods.update_onesignal_device = async function update_onesignal_dev
 ) {
   try {
     const user = this;
-    const { email}=user;
+    const { email } = user;
 
 
     if (typeof custom_data !== 'object') {
@@ -525,8 +545,8 @@ UserSchema.methods.update_onesignal_device = async function update_onesignal_dev
     // max 2 tags
     notifHelper.updateClientDeviceByUserId(`${user.id}`, {
       tags: {
-        email, 
-      
+        email,
+
       },
       ...custom_data,
     });
@@ -658,7 +678,7 @@ UserSchema.methods.send_push_notification = async function send_push_notificatio
   { notif_type,
     headings_labels = [],
     content_labels = [],
-    custom_data = {}},
+    custom_data = {} },
 ) {
   try {
     const _this = this;
@@ -666,9 +686,9 @@ UserSchema.methods.send_push_notification = async function send_push_notificatio
     console.log('send_push_notification');
     console.log({
       notif_type,
-      headings_labels ,
-      content_labels ,
-      custom_data, 
+      headings_labels,
+      content_labels,
+      custom_data,
     });
 
 
@@ -684,7 +704,7 @@ UserSchema.methods.send_push_notification = async function send_push_notificatio
     custom_data.notif_type = notif_type || undefined;
 
     // filter by external_user_id
-    const msg =await  notifHelper.clientMessage(
+    const msg = await notifHelper.clientMessage(
       {
         include_external_user_ids: [_this.id],
         notif_type,
@@ -693,13 +713,13 @@ UserSchema.methods.send_push_notification = async function send_push_notificatio
         custom_data,
       },
     );
-    
+
 
     await notifHelper.sendClientNotification(msg);
     console.info(`notif type= ${notif_type} sent to client = ${_this.email}`);
 
     return true;
-  
+
   } catch (error) {
     console.error('Send_Notification Error');
     console.error(error);
